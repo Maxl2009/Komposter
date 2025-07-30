@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wer ist der Spion? - Super Detektiv App</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Spion App">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png"> 
+    <meta name="theme-color" content="#4CAF50"/> </head>
+<body>
+    <header>
+        <h1>Wer ist der Spion?</h1>
+        <p class="tagline">Das super-geheime Detektivspiel!</p>
+    </header>
+
+    <main>
+        <section id="setup-screen" class="screen active">
+            <h2 class="screen-title">Bereit machen für die Detektive!</h2>
+            
+            <div class="input-group">
+                <label for="playerNameInput">Neuer Detektiv:</label>
+                <input type="text" id="playerNameInput" placeholder="Name hier eingeben">
+                <button id="addPlayerButton" class="icon-button"><img src="icons/plus.png" alt="Hinzufügen"> Dazufügen</button>
+            </div>
+            
+            <div class="player-list-container card">
+                <h3>Unsere schlauen Detektive:</h3>
+                <ul id="playerList">
+                    </ul>
+            </div>
+
+            <div class="input-group">
+                <label for="imposterCount">Wie viele gemeine Spione?</label>
+                <input type="number" id="imposterCount" value="1" min="1" max="5">
+            <div class="input-group">
+                <label>Wählt ein Thema für unser Geheimwort (Du kannst mehrere wählen!)</label>
+                <select id="topicSelect" multiple class="visually-hidden"></select>
+                <div id="topicChipsContainer" class="topic-chips-container">
+                    </div>
+            </div>
+            </div>
+
+            <div class="input-group checkbox-group">
+                <input type="checkbox" id="imposterHintToggle">
+                <label for="imposterHintToggle">Spione bekommen einen geheimen Tipp!</label>
+            </div>
+
+            <div class="button-group">
+                <button id="startGameButton" class="big-button"><img src="icons/start.png" alt="Spiel starten"> Los geht's!</button>
+            </div>
+        </section>
+
+        <section id="word-management-screen" class="screen">
+            <h2 class="screen-title">Unser geheimer Wort-Schatz!</h2>
+            
+            <div class="input-group">
+                <label for="topicNameInput">Neues Thema:</label>
+                <input type="text" id="topicNameInput" placeholder="Z.B. Früchte oder Fahrzeuge">
+            </div>
+            <div class="input-group">
+                <label for="crewWordInput">Geheimwort für Detektive:</label>
+                <input type="text" id="crewWordInput" placeholder="Z.B. Banane oder Auto">
+            </div>
+            <div class="input-group">
+                <label for="imposterHintWordInput">Tipp für den Spion (optional):</label>
+                <input type="text" id="imposterHintWordInput" placeholder="Z.B. Obst oder Verkehrsmittel">
+            </div>
+            <button id="addTopicButton" class="icon-button"><img src="icons/plus.png" alt="Hinzufügen"> Thema merken</button>
+
+            <h3 class="list-title">Unsere geheimen Themen:</h3>
+            <ul id="topicList" class="card">
+                </ul>
+
+            <div class="button-group">
+                <button id="backToSetupButton" class="small-button">Zurück zum Anfang</button>
+            </div>
+        </section>
+
+        <section id="game-screen" class="screen">
+            <h2 class="screen-title" id="currentPlayerName"></h2> <div id="roleDisplay" class="role-display card">
+                <p class="instruction">Tippe hier, um dein Geheimnis zu sehen!</p>
+            </div>
+            <button id="revealButton" class="big-button hidden"><img src="icons/reveal.png" alt="Rolle aufdecken"> Mein Geheimnis aufdecken</button>
+            <button id="nextPlayerButton" class="small-button hidden">Nächster Detektiv</button>
+            <button id="endGameButton" class="small-button hidden">Spiel beenden</button>
+        </section>
+
+        <section id="summary-screen" class="screen">
+            <h2 class="screen-title">Wer war wer? Das große Ergebnis!</h2>
+            <div id="summaryDetails" class="card">
+                </div>
+            <button id="newGameButton" class="big-button"><img src="icons/summary.png" alt="Neues Spiel"> Neues Spiel starten!</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Dein Spion Spiel</p>
+        <button id="goToWordManagementButton" class="footer-button">Geheim-Wörter verwalten</button>
+    </footer>
+
+    <script src="app.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => {
+                        console.log('Geheimer Helfer bereit! Hier ist sein Bereich:', reg.scope);
+                    })
+                    .catch(err => {
+                        console.log('Geheimer Helfer konnte nicht starten:', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
